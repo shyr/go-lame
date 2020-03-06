@@ -376,8 +376,12 @@ func (l *Lame) GetMode() Mode {
 
 func (l *Lame) SetId3tag() {
 	l.checkLgs()
-	C.id3tag_init(l.lgs)
 	C.id3tag_v2_only(l.lgs)
+}
+
+func (l *Lame) SetId3Comment(comment string) {
+	l.checkLgs()
+	C.id3tag_set_comment(l.lgs, comment)
 }
 
 /*
