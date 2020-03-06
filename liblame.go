@@ -374,6 +374,11 @@ func (l *Lame) GetMode() Mode {
 	return Mode(C.lame_get_mode(l.lgs))
 }
 
+func (l *Lame) SetId3tag() error {
+	l.checkLgs()
+	return l.setterError("id3tag_v2_only", int(C.id3tag_v2_only(l.lgs)))
+}
+
 /*
   force_ms.  Force M/S for all frames.  For testing only.
   default = 0 (disabled)
