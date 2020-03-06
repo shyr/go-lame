@@ -1,5 +1,6 @@
 package lame
 
+import "C"
 import (
 	"errors"
 	"io"
@@ -84,7 +85,7 @@ func (w *Writer) ForceUpdateParams() (err error) {
 		w.lame.SetId3tag()
 	}
 	if w.ID3Comment != "" {
-		w.lame.SetId3Comment(w.ID3Comment)
+		w.lame.SetId3Comment(C.CString(w.ID3Comment))
 	}
 	return nil
 }
