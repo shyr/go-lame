@@ -78,14 +78,14 @@ func (w *Writer) ForceUpdateParams() (err error) {
 	if err = w.lame.SetBrate(w.OutBitrate); err != nil {
 		return
 	}
-	if err = w.lame.InitParams(); err != nil {
-		return
-	}
 	if w.ID3Tag {
 		w.lame.SetId3tag()
 	}
 	if w.ID3Comment != "" {
 		w.lame.SetId3Comment(w.ID3Comment)
+	}
+	if err = w.lame.InitParams(); err != nil {
+		return
 	}
 	return nil
 }
