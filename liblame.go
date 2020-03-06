@@ -381,7 +381,7 @@ func (l *Lame) SetId3tag() {
 
 func (l *Lame) SetId3Comment(comment string) {
 	l.checkLgs()
-	cComment := (*C.char)(unsafe.Pointer(&comment))
+	cComment := C.CString(comment)
 	C.id3tag_set_comment(l.lgs, cComment)
 }
 
