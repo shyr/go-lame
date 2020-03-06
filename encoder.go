@@ -80,9 +80,7 @@ func (w *Writer) ForceUpdateParams() (err error) {
 		return
 	}
 	if w.ID3Tag {
-		if err = w.lame.SetId3tag(); err != nil {
-			return
-		}
+		w.lame.SetId3tag()
 	}
 	return nil
 }

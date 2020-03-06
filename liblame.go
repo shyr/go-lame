@@ -374,9 +374,9 @@ func (l *Lame) GetMode() Mode {
 	return Mode(C.lame_get_mode(l.lgs))
 }
 
-func (l *Lame) SetId3tag() error {
+func (l *Lame) SetId3tag() {
 	l.checkLgs()
-	return l.setterError("id3tag_v2_only", int(C.id3tag_v2_only(l.lgs)))
+	C.id3tag_v2_only(l.lgs)
 }
 
 /*
