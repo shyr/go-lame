@@ -18,7 +18,8 @@ type (
 		InSampleRate    int  // Hz, e.g., 8000, 16000, 12800, 44100, etc.
 		InBitsPerSample int  // typically 16 should be working fine. the bit count of each sample, e.g., 2Bytes/sample->16bits
 		InNumChannels   int  // count of channels, for mono ones, please remain 1, and 2 if stereo
-		ID3Tag   bool
+		ID3Tag          bool
+		ID3Comment      string
 
 		OutBitrate    int  // Kbps
 		OutSampleRate int  // Hz
@@ -49,7 +50,7 @@ func NewWriter(output io.Writer) (*Writer, error) {
 			InSampleRate:    44100,
 			InBitsPerSample: 16,
 			InNumChannels:   2,
-			ID3Tag: true,
+			ID3Tag:          true,
 			OutBitrate:      32,
 			OutSampleRate:   44100,
 			OutMode:         MODE_MONO,
@@ -81,6 +82,9 @@ func (w *Writer) ForceUpdateParams() (err error) {
 	}
 	if w.ID3Tag {
 		w.lame.SetId3tag()
+	}
+	if w.ID3Comment != "" {
+		w.lame.SetId3Comment(w.ID3Comment)
 	}
 	return nil
 }
