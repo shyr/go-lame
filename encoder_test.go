@@ -11,7 +11,7 @@ func Test_Encoder_Full(t *testing.T) {
 	fout, _ := os.OpenFile("out2.mp3", os.O_WRONLY | os.O_TRUNC | os.O_CREATE, 0755)
 	wr, err := NewWriter(fout)
 	if err != nil {
-		t.Errorf("cannot create lame writer, %s", err.Error())
+		t.Errorf("cannot create Lame writer, %s", err.Error())
 	}
 	wr.InNumChannels = 1
 	wr.InSampleRate = 16000

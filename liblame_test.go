@@ -12,7 +12,7 @@ func Test_LibLame_Full(t *testing.T) {
 	f, _ := os.OpenFile(fn, os.O_RDONLY, 0700)
 	lame, err := NewLame()
 	if err != nil {
-		t.Errorf("cannot create lame: %s", err.Error())
+		t.Errorf("cannot create Lame: %s", err.Error())
 	}
 	defer f.Close()
 	data, err := ioutil.ReadAll(f)

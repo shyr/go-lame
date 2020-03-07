@@ -77,7 +77,7 @@ var (
 	ErrInvalidSampleRate  = errors.New("invalid sample rate, supports only 8, 12, 16, 22, 32, 44.1, 48k")
 )
 
-// create and init a lame struct
+// create and init a Lame struct
 func NewLame() (l *Lame, err error) {
 	l = new(Lame)
 	l.paramUpdated = false
@@ -332,7 +332,7 @@ func (l *Lame) GetBWriteVbrTag() int {
 	return int(C.lame_get_bWriteVbrTag(l.lgs))
 }
 
-/* 1=decode only.  use lame/mpglib to convert mp3/ogg to wav.  default=0 */
+/* 1=decode only.  use Lame/mpglib to convert mp3/ogg to wav.  default=0 */
 func (l *Lame) SetDecodeOnly(decodeOnly int) error {
 	l.checkLgs()
 	return l.setterError("lame_set_decode_only", int(C.lame_set_decode_only(l.lgs, C.int(decodeOnly))))
@@ -363,7 +363,7 @@ func (l *Lame) GetQuality() int {
 
 /*
   mode = 0,1,2,3 = stereo, jstereo, dual channel (not supported), mono
-  default: lame picks based on compression ration and input channels
+  default: Lame picks based on compression ration and input channels
 */
 func (l *Lame) SetMode(mode Mode) error {
 	l.checkLgs()
@@ -716,7 +716,7 @@ func (l *Lame) GetVBRHardMin() int {
 }
 
 /* filtering... */
-/* freq in Hz to apply lowpass. Default = 0 = lame chooses.  -1 = disabled */
+/* freq in Hz to apply lowpass. Default = 0 = Lame chooses.  -1 = disabled */
 func (l *Lame) SetLowpassfreq(lowpassfreq int) error {
 	l.checkLgs()
 	return l.setterError("lame_set_lowpassfreq", int(C.lame_set_lowpassfreq(l.lgs, C.int(lowpassfreq))))
@@ -738,7 +738,7 @@ func (l *Lame) GetLowpasswidth() int {
 	return int(C.lame_get_lowpasswidth(l.lgs))
 }
 
-/* freq in Hz to apply highpass. Default = 0 = lame chooses.  -1 = disabled */
+/* freq in Hz to apply highpass. Default = 0 = Lame chooses.  -1 = disabled */
 func (l *Lame) SetHighpassfreq(highpassfreq int) error {
 	l.checkLgs()
 	return l.setterError("lame_set_highpassfreq", int(C.lame_set_highpassfreq(l.lgs, C.int(highpassfreq))))
@@ -960,7 +960,7 @@ func (l *Lame) GetFrameNum() int {
 }
 
 /*
-  lame's estimate of the total number of frames to be encoded
+  Lame's estimate of the total number of frames to be encoded
    only valid if calling program set num_samples
 */
 func (l *Lame) GetTotalframes() int {

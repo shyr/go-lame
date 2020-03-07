@@ -30,7 +30,7 @@ type (
 
 	Writer struct {
 		output io.Writer
-		lame   *Lame
+		Lame   *Lame
 		EncodeOptions
 	}
 )
@@ -45,7 +45,7 @@ func NewWriter(output io.Writer) (*Writer, error) {
 	}
 	return &Writer{
 		output: output,
-		lame:   lame,
+		Lame:   lame,
 		EncodeOptions: EncodeOptions{
 			InBigEndian:     false,
 			InSampleRate:    44100,
@@ -63,39 +63,39 @@ func NewWriter(output io.Writer) (*Writer, error) {
 // forced to init the params inside
 // NOT NECESSARY
 func (w *Writer) ForceUpdateParams() (err error) {
-	if err = w.lame.SetInSampleRate(w.InSampleRate); err != nil {
+	if err = w.Lame.SetInSampleRate(w.InSampleRate); err != nil {
 		return
 	}
-	if err = w.lame.SetOutSampleRate(w.OutSampleRate); err != nil {
+	if err = w.Lame.SetOutSampleRate(w.OutSampleRate); err != nil {
 		return
 	}
-	if err = w.lame.SetNumChannels(w.InNumChannels); err != nil {
+	if err = w.Lame.SetNumChannels(w.InNumChannels); err != nil {
 		return
 	}
-	if err = w.lame.SetQuality(w.OutQuality); err != nil {
+	if err = w.Lame.SetQuality(w.OutQuality); err != nil {
 		return
 	}
-	if err = w.lame.SetBrate(w.OutBitrate); err != nil {
+	if err = w.Lame.SetBrate(w.OutBitrate); err != nil {
 		return
 	}
 	if w.ID3Tag {
-		w.lame.SetId3tag()
+		w.Lame.SetId3tag()
 	}
 	if w.ID3Comment != "" {
-		w.lame.SetId3Comment(w.ID3Comment)
+		w.Lame.SetId3Comment(w.ID3Comment)
 	}
-	if err = w.lame.InitParams(); err != nil {
+	if err = w.Lame.InitParams(); err != nil {
 		return
 	}
 	return nil
 }
 
 // NOT thread-safe!
-// will check if we have lame object inside first!
+// will check if we have Lame object inside first!
 // TODO: support 8bit/32bit!
 // currently, we support 16bit depth only
 func (w *Writer) Write(p []byte) (n int, err error) {
-	if !w.lame.paramUpdated {
+	if !w.Lame.paramUpdated {
 		if err = w.ForceUpdateParams(); err != nil {
 			return 0, err
 		}
@@ -122,9 +122,9 @@ func (w *Writer) Write(p []byte) (n int, err error) {
 		return 0, ErrUnsupportedChannelNum
 	}
 	if w.InNumChannels == 1 {
-		n, err = w.lame.EncodeInt16(samples, samples, mp3Buf)
+		n, err = w.Lame.EncodeInt16(samples, samples, mp3Buf)
 	} else if w.InNumChannels == 2 {
-		n, err = w.lame.EncodeInt16Interleaved(samples, mp3Buf)
+		n, err = w.Lame.EncodeInt16Interleaved(samples, mp3Buf)
 	}
 	if err != nil {
 		return 0, err
@@ -138,7 +138,7 @@ func (w *Writer) Write(p []byte) (n int, err error) {
 
 func (w *Writer) Close() error {
 	// try to get some residual data
-	if residual, err := w.lame.EncodeFlush(); err != nil {
+	if residual, err := w.Lame.EncodeFlush(); err != nil {
 		return err
 	} else {
 		if len(residual) > 0 {
